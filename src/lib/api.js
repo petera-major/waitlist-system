@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://waitlist-backend.eba-amjuhux6.us-east-1.elasticbeanstalk.com/api";
+const API_BASE = import.meta.env.VITE_API_BASE || "https://d2ioy80fu31mv2.cloudfront.net/api/waitlist";
 
 export const api = axios.create({ baseURL: API_BASE });
 
