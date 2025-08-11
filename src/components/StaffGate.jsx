@@ -1,32 +1,25 @@
 import { useEffect, useState } from "react";
 
 export default function StaffGate({ onChange }) {
-  const [pin, setPin] = useState(localStorage.getItem("staffPin") || "");
-
-  useEffect(() => { onChange(Boolean(pin)); }, [pin, onChange]);
-
+  const [token, setToken] = useState(localStorage.getItem('staffToken') || '');
   const submit = (e) => {
     e.preventDefault();
-    const v = e.target.pin.value.trim();
-    if (v.length < 4) return;
-    localStorage.setItem("staffPin", v);
-    setPin(v);
+    localStorage.setItem('staffToken', token.trim());
+    onChange(true)
   };
 
   const signOut = () => {
-    localStorage.removeItem("staffPin");
-    setPin("");
+    localStorage.removeItem("staffToken");
+    setToken("");
     onChange(false);
   };
 
   return (
     <div className="flex items-center gap-2">
-      {!pin ? (
+      {!token ? (
         <form onSubmit={submit} className="flex items-center gap-2">
-          <input
-            name="pin"
-            placeholder="Staff PIN"
-            inputMode="numeric"
+          <input value={token} onChange={e=setToken(e.target.value)}
+            placeholder="Staff token"
             className="w-28 rounded-lg border px-3 py-1.5 text-sm"
           />
           <button className="rounded-lg bg-black text-white px-3 py-1.5 text-sm">
