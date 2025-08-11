@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function StaffGate({ onChange }) {
   const [token, setToken] = useState(localStorage.getItem('staffToken') || '');
+  const signedIn = !!localStorage.getItem('staffToken');
+
   const submit = (e) => {
     e.preventDefault();
     localStorage.setItem('staffToken', token.trim());
@@ -14,11 +16,11 @@ export default function StaffGate({ onChange }) {
     onChange(false);
   };
 
-  return (
-    <div className="flex items-center gap-2">
-      {!token ? (
+  return !signedIn ? (
         <form onSubmit={submit} className="flex items-center gap-2">
-          <input value={token} onChange={e=setToken(e.target.value)}
+          <input
+           value={token} 
+           onChange={e=setToken(e.target.value)}
             placeholder="Staff token"
             className="w-28 rounded-lg border px-3 py-1.5 text-sm"
           />
@@ -33,7 +35,5 @@ export default function StaffGate({ onChange }) {
             Sign out
           </button>
         </div>
-      )}
-    </div>
   );
 }
