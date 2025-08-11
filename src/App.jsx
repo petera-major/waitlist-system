@@ -7,7 +7,7 @@ import WaitlistTable from "./components/WaitlistTable";
 function useWaitlist() {
   const [list, setList] = useState([]);
   const load = useCallback(async () => {
-    const { data } = await api.get(`waitlist`);
+    const { data } = await api.get(`/waitlist`);
     setList(data);
   }, []);
   useEffect(() => { load(); }, [load]);
@@ -43,7 +43,7 @@ function PublicPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await api.post(`waitlist`, form);
+      await api.post(`/waitlist`, form);
       setForm({ name: "", partySize: 2, phone: "" });
       await load();
     } finally { setLoading(false); }
@@ -61,9 +61,9 @@ function StaffPage() {
   const { list, load } = useWaitlist();
   const [isEmployee, setIsEmployee] = useState(Boolean(localStorage.getItem("staffPin")));
 
-  const notify = async (id) => { await api.patch(`waitlist/${id}/notify`); load(); };
-  const seat   = async (id) => { await api.patch(`waitlist/${id}/seat`);   load(); };
-  const remove = async (id) => { await api.delete(`waitlist/${id}`);       load(); };
+  const notify = async (id) => { await api.patch(`/waitlist/${id}/notify`); load(); };
+  const seat   = async (id) => { await api.patch(`/waitlist/${id}/seat`);   load(); };
+  const remove = async (id) => { await api.delete(`/waitlist/${id}`);       load(); };
 
   if (!isEmployee) {
     return (
