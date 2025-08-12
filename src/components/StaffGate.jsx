@@ -2,14 +2,15 @@ import { useState } from "react";
 
 export default function StaffGate({ onChange }) {
   const [token, setToken] = useState(localStorage.getItem("staffToken") || "");
-  const signedIn = !!token;
+
+  const signedIn = !!localStorage.getItem("staffToken");
 
   const submit = (e) => {
     e.preventDefault();
     const t = token.trim();
-    if (!t) return;                         
+    if (!t) return;
     localStorage.setItem("staffToken", t);
-    onChange(true);
+    onChange(true);            // tell parent to show staff view
   };
 
   const signOut = () => {
@@ -22,7 +23,7 @@ export default function StaffGate({ onChange }) {
     <form onSubmit={submit} className="flex items-center gap-2">
       <input
         value={token}
-        onChange={(e) => setToken(e.target.value)}   
+        onChange={(e) => setToken(e.target.value)}
         placeholder="Staff token"
         className="w-28 rounded-lg border px-3 py-1.5 text-sm"
       />
