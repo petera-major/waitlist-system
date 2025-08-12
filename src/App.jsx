@@ -59,8 +59,15 @@ function PublicPage() {
 
 function StaffPage() {
   const { list, load } = useWaitlist();
-  const [isEmployee, setIsEmployee] = useState(Boolean(localStorage.getItem("staffPin")));
 
+  const [isEmployee, setIsEmployee] = useState(
+    Boolean(localStorage.getItem("staffToken"))
+  );
+
+  useEffect(() => {
+    setIsEmployee(Boolean(localStorage.getItem("staffToken")));
+  }, []);
+  
   const notify = async (id) => { await api.patch(`/waitlist/${id}/notify`); load(); };
   const seat   = async (id) => { await api.patch(`/waitlist/${id}/seat`);   load(); };
   const remove = async (id) => { await api.delete(`/waitlist/${id}`);       load(); };
